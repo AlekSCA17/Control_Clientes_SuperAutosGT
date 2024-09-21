@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Listado</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auto in autos %}
+            <tr>
+                <td>{{ auto.idTipoAuto }}</td>
+                <td>{{ auto.marca }}</td>
+                <td>{{ auto.modelo }}</td>
+                <td>{{ auto.descripcion }}</td>
+                <td>Q{{ auto.precio_unitario }}</td>
+                <td>{{ auto.cantidad }}</td>
+                <td><img src="{{ auto.imagen }}" alt="Imagen del auto" width="100"></td>
+                <td>
+                    <form action="{{ url_for('eliminar_auto', index=loop.index0) }}" method="POST">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/index">¿Quieres registrar otro carro?</a>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

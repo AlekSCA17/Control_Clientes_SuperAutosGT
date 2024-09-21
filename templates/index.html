@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Auto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Registrar Auto</h2>
+    <form method="POST" action="/index">
+        <label>ID Tipo Auto</label>
+        <input type="number" name="idTipoAuto" required>
+        
+        <label>Marca</label>
+        <input type="text" name="marca" required>
+        
+        <label>Modelo</label>
+        <input type="text" name="modelo" required>
+        
+        <label>Descripción</label>
+        <textarea name="descripcion" required></textarea>
+        
+        <label>Precio Unitario</label>
+        <input type="number" name="precio_unitario" step="0.01" required>
+        
+        <label>Cantidad</label>
+        <input type="number" name="cantidad" required>
+        
+        <label>URL de la Imagen</label>
+        <input type="text" name="imagen" required>
+        
+        <button type="submit">Registra un carro</button>
+    </form>
+    <a href="/autos">Ver lista</a>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
