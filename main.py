@@ -4,7 +4,7 @@ app = Flask(__name__)
 app.secret_key = 'clave_secreta_para_sesiones'
 
 
-# Definir una clase Auto
+
 class Auto:
     def __init__(self, idTipoAuto, marca, modelo, descripcion, precio_unitario, cantidad, imagen):
         self.idTipoAuto = idTipoAuto
@@ -16,7 +16,7 @@ class Auto:
         self.imagen = imagen
 
 
-# Definir una clase Usuario para gestionar la autenticación
+
 class Usuario:
     def __init__(self, nombre, contraseña):
         self.nombre = nombre
@@ -26,12 +26,12 @@ class Usuario:
         return self.nombre == usuario and self.contraseña == contraseña
 
 
-# Instanciar un usuario y una lista para autos
+
 USUARIO = Usuario('empleado', '$uper4utos#')
 autos = []
 
 
-# Endpoints usando las clases creadas
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -39,7 +39,7 @@ def login():
         usuario = request.form['usuario']
         contraseña = request.form['contraseña']
 
-        # Validar credenciales usando el objeto USUARIO
+        
         if USUARIO.validar_credenciales(usuario, contraseña):
             session['logged_in'] = True
             return redirect(url_for('index'))
@@ -63,12 +63,12 @@ def index():
         cantidad = int(request.form['cantidad'])
         imagen = request.form['imagen']
 
-        # Validar que no haya duplicado de ID
+        
         if any(auto.idTipoAuto == idTipoAuto for auto in autos):
             flash('Error: El ID del auto ya existe. No se puede registrar el mismo ID.', 'error')
             return redirect(url_for('index'))
 
-        # Crear un nuevo auto como objeto de la clase Auto
+        
         nuevo_auto = Auto(idTipoAuto, marca, modelo, descripcion, precio_unitario, cantidad, imagen)
         autos.append(nuevo_auto)
         flash('Auto registrado con éxito.', 'success')
